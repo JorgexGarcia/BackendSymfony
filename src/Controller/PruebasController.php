@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use Composer\Semver\Interval;
+use Psr\Log\LoggerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -11,6 +12,11 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class PruebasController extends AbstractController
 {
+    //contructor para hacer dependencias
+    private $logger;
+    public function __construct(LoggerInterface  $logger){
+        $this->logger = $logger;
+    }
 
     //Para poner rutas, seguido de un nombre
     /**
@@ -54,7 +60,9 @@ class PruebasController extends AbstractController
         //Get con parametros en la URL
         $id = $request->get('id');
         //Saber Ip
-        echo $request->getClientIp();
+        //echo $request->getClientIp();
+
+        $this->logger->alert('Visitante con ip: '.$request->getClientIp());
         if($id != null){
             $response = new JsonResponse();
             $response->setData([
