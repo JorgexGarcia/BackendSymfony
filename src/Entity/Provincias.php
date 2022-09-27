@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -27,6 +29,4 @@ class Provincias
      * @ORM\Column(name="provincia", type="string", length=255, nullable=false)
      */
     private $provincia;
-
-
 }

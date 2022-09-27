@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\HorarioRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +33,12 @@ class Horario
      * @ORM\Column(type="time", nullable=true)
      */
     private $cierre;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Restaurante::class, inversedBy="horario")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $restaurante;
 
     public function getId(): ?int
     {
@@ -72,4 +80,17 @@ class Horario
 
         return $this;
     }
+
+    public function getRestaurante(): ?Restaurante
+    {
+        return $this->restaurante;
+    }
+
+    public function setRestaurante(?Restaurante $restaurante): self
+    {
+        $this->restaurante = $restaurante;
+
+        return $this;
+    }
+
 }

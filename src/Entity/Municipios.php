@@ -37,6 +37,4 @@ class Municipios
      * })
      */
     private $idProvincia;
-
-
 }
