@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Alergenos;
+use App\Entity\Alergeno;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Alergenos>
+ * @extends ServiceEntityRepository<Alergeno>
  *
- * @method Alergenos|null find($id, $lockMode = null, $lockVersion = null)
- * @method Alergenos|null findOneBy(array $criteria, array $orderBy = null)
- * @method Alergenos[]    findAll()
- * @method Alergenos[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Alergeno|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Alergeno|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Alergeno[]    findAll()
+ * @method Alergeno[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class AlergenosRepository extends ServiceEntityRepository
+class AlergenoRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Alergenos::class);
+        parent::__construct($registry, Alergeno::class);
     }
 
-    public function add(Alergenos $entity, bool $flush = false): void
+    public function add(Alergeno $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class AlergenosRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Alergenos $entity, bool $flush = false): void
+    public function remove(Alergeno $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class AlergenosRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Alergenos[] Returns an array of Alergenos objects
+//     * @return Alergeno[] Returns an array of Alergeno objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class AlergenosRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Alergenos
+//    public function findOneBySomeField($value): ?Alergeno
 //    {
 //        return $this->createQueryBuilder('a')
 //            ->andWhere('a.exampleField = :val')

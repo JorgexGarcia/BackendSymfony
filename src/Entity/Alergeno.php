@@ -2,13 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\EstadoRepository;
+use App\Repository\AlergenoRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=EstadoRepository::class)
+ * @ORM\Entity(repositoryClass=AlergenoRepository::class)
  */
-class Estado
+class Alergeno
 {
     /**
      * @ORM\Id
@@ -20,21 +20,21 @@ class Estado
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $estado;
+    private $alergeno;
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getEstado(): ?string
+    public function getAlergeno(): ?string
     {
-        return $this->estado;
+        return $this->alergeno;
     }
 
-    public function setEstado(string $estado): self
+    public function setAlergeno(string $alergeno): self
     {
-        $this->estado = $estado;
+        $this->alergeno = $alergeno;
 
         return $this;
     }

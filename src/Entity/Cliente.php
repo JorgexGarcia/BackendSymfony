@@ -25,12 +25,12 @@ class Cliente
     private $nombre;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $apellidos;
 
     /**
-     * @ORM\Column(type="integer", length=12, nullable=true)
+     * @ORM\Column(type="string", length=12)
      */
     private $telefono;
 
@@ -42,12 +42,12 @@ class Cliente
     /**
      * @ORM\OneToMany(targetEntity=Pedido::class, mappedBy="cliente", orphanRemoval=true)
      */
-    private $pedido;
+    private $pedidos;
 
     public function __construct()
     {
         $this->direcciones = new ArrayCollection();
-        $this->pedido = new ArrayCollection();
+        $this->pedidos = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -79,12 +79,12 @@ class Cliente
         return $this;
     }
 
-    public function getTelefono(): ?int
+    public function getTelefono(): ?string
     {
         return $this->telefono;
     }
 
-    public function setTelefono(int $telefono): self
+    public function setTelefono(string $telefono): self
     {
         $this->telefono = $telefono;
 
@@ -124,15 +124,15 @@ class Cliente
     /**
      * @return Collection<int, Pedido>
      */
-    public function getPedido(): Collection
+    public function getPedidos(): Collection
     {
-        return $this->pedido;
+        return $this->pedidos;
     }
 
     public function addPedido(Pedido $pedido): self
     {
-        if (!$this->pedido->contains($pedido)) {
-            $this->pedido[] = $pedido;
+        if (!$this->pedidos->contains($pedido)) {
+            $this->pedidos[] = $pedido;
             $pedido->setCliente($this);
         }
 
@@ -141,7 +141,7 @@ class Cliente
 
     public function removePedido(Pedido $pedido): self
     {
-        if ($this->pedido->removeElement($pedido)) {
+        if ($this->pedidos->removeElement($pedido)) {
             // set the owning side to null (unless already changed)
             if ($pedido->getCliente() === $this) {
                 $pedido->setCliente(null);

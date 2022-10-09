@@ -14,7 +14,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Municipios[]    findAll()
  * @method Municipios[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class MunicipioRepository extends ServiceEntityRepository
+class MunicipiosRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {

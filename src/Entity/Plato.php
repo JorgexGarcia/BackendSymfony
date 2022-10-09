@@ -35,34 +35,25 @@ class Plato
     private $imagenUrl;
 
     /**
-     * @ORM\Column(type="integer")
-     */
-    private $precio;
-
-    /**
-     * @ORM\ManyToOne(targetEntity=Restaurante::class, inversedBy="plato")
+     * @ORM\ManyToOne(targetEntity=Restaurante::class, inversedBy="platos")
+     * @ORM\JoinColumn(nullable=false)
      */
     private $restaurante;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Alergenos::class)
+     * @ORM\ManyToMany(targetEntity=Alergeno::class)
      */
     private $alergenos;
 
     /**
-     * @ORM\OneToMany(targetEntity=Pedido::class, mappedBy="platos")
+     * @ORM\OneToMany(targetEntity=CantidadPlatosPedido::class, mappedBy="plato", orphanRemoval=false)
      */
-    private $pedidos;
-
-    /**
-     * @ORM\Column(type="integer")
-     */
-    private $cantidad;
+    private $cantidadPlato;
 
     public function __construct()
     {
         $this->alergenos = new ArrayCollection();
-        $this->pedidos = new ArrayCollection();
+        $this->cantidadPlato = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -87,7 +78,7 @@ class Plato
         return $this->descripcion;
     }
 
-    public function setDescripcion(string $descripcion): self
+    public function setDescripcion(?string $descripcion): self
     {
         $this->descripcion = $descripcion;
 
@@ -99,21 +90,9 @@ class Plato
         return $this->imagenUrl;
     }
 
-    public function setImagenUrl(string $imagenUrl): self
+    public function setImagenUrl(?string $imagenUrl): self
     {
         $this->imagenUrl = $imagenUrl;
-
-        return $this;
-    }
-
-    public function getPrecio(): ?int
-    {
-        return $this->precio;
-    }
-
-    public function setPrecio(int $precio): self
-    {
-        $this->precio = $precio;
 
         return $this;
     }
@@ -131,14 +110,14 @@ class Plato
     }
 
     /**
-     * @return Collection<int, Alergenos>
+     * @return Collection<int, Alergeno>
      */
     public function getAlergenos(): Collection
     {
         return $this->alergenos;
     }
 
-    public function addAlergeno(Alergenos $alergeno): self
+    public function addAlergeno(Alergeno $alergeno): self
     {
         if (!$this->alergenos->contains($alergeno)) {
             $this->alergenos[] = $alergeno;
@@ -147,7 +126,7 @@ class Plato
         return $this;
     }
 
-    public function removeAlergeno(Alergenos $alergeno): self
+    public function removeAlergeno(Alergeno $alergeno): self
     {
         $this->alergenos->removeElement($alergeno);
 
@@ -155,43 +134,31 @@ class Plato
     }
 
     /**
-     * @return Collection<int, Pedido>
+     * @return Collection<int, CantidadPlatosPedido>
      */
-    public function getPedidos(): Collection
+    public function getCantidadPlato(): Collection
     {
-        return $this->pedidos;
+        return $this->cantidadPlato;
     }
 
-    public function addPedido(Pedido $pedido): self
+    public function addCantidadPlato(CantidadPlatosPedido $cantidadPlato): self
     {
-        if (!$this->pedidos->contains($pedido)) {
-            $this->pedidos[] = $pedido;
-            $pedido->setPlatos($this);
+        if (!$this->cantidadPlato->contains($cantidadPlato)) {
+            $this->cantidadPlato[] = $cantidadPlato;
+            $cantidadPlato->setPlato($this);
         }
 
         return $this;
     }
 
-    public function removePedido(Pedido $pedido): self
+    public function removeCantidadPlato(CantidadPlatosPedido $cantidadPlato): self
     {
-        if ($this->pedidos->removeElement($pedido)) {
+        if ($this->cantidadPlato->removeElement($cantidadPlato)) {
             // set the owning side to null (unless already changed)
-            if ($pedido->getPlatos() === $this) {
-                $pedido->setPlatos(null);
+            if ($cantidadPlato->getPlato() === $this) {
+                $cantidadPlato->setPlato(null);
             }
         }
-
-        return $this;
-    }
-
-    public function getCantidad(): ?int
-    {
-        return $this->cantidad;
-    }
-
-    public function setCantidad(int $cantidad): self
-    {
-        $this->cantidad = $cantidad;
 
         return $this;
     }

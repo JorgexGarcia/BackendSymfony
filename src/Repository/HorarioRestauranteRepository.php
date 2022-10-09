@@ -2,26 +2,26 @@
 
 namespace App\Repository;
 
-use App\Entity\Horario;
+use App\Entity\HorarioRestaurante;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Horario>
+ * @extends ServiceEntityRepository<HorarioRestaurante>
  *
- * @method Horario|null find($id, $lockMode = null, $lockVersion = null)
- * @method Horario|null findOneBy(array $criteria, array $orderBy = null)
- * @method Horario[]    findAll()
- * @method Horario[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method HorarioRestaurante|null find($id, $lockMode = null, $lockVersion = null)
+ * @method HorarioRestaurante|null findOneBy(array $criteria, array $orderBy = null)
+ * @method HorarioRestaurante[]    findAll()
+ * @method HorarioRestaurante[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class HorarioRepository extends ServiceEntityRepository
+class HorarioRestauranteRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Horario::class);
+        parent::__construct($registry, HorarioRestaurante::class);
     }
 
-    public function add(Horario $entity, bool $flush = false): void
+    public function add(HorarioRestaurante $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
 
@@ -30,7 +30,7 @@ class HorarioRepository extends ServiceEntityRepository
         }
     }
 
-    public function remove(Horario $entity, bool $flush = false): void
+    public function remove(HorarioRestaurante $entity, bool $flush = false): void
     {
         $this->getEntityManager()->remove($entity);
 
@@ -40,7 +40,7 @@ class HorarioRepository extends ServiceEntityRepository
     }
 
 //    /**
-//     * @return Horario[] Returns an array of Horario objects
+//     * @return HorarioRestaurante[] Returns an array of HorarioRestaurante objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -54,7 +54,7 @@ class HorarioRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Horario
+//    public function findOneBySomeField($value): ?HorarioRestaurante
 //    {
 //        return $this->createQueryBuilder('h')
 //            ->andWhere('h.exampleField = :val')

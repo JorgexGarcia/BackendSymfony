@@ -18,12 +18,12 @@ class Direccion
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $calle;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=50, nullable=true)
      */
     private $numero;
 
@@ -35,7 +35,7 @@ class Direccion
     /**
      * @ORM\Column(type="integer")
      */
-    private $cod_postal;
+    private $codPostal;
 
     /**
      * @ORM\ManyToOne(targetEntity=Cliente::class, inversedBy="direcciones")
@@ -44,16 +44,16 @@ class Direccion
     private $cliente;
 
     /**
-     * @ORM\OneToOne(targetEntity=Provincias::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $provincia;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Municipios::class, cascade={"persist", "remove"})
+     * @ORM\ManyToOne(targetEntity=Municipios::class)
      * @ORM\JoinColumn(nullable=false)
      */
     private $municipio;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Provincias::class)
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $provincia;
 
     public function getId(): ?int
     {
@@ -77,7 +77,7 @@ class Direccion
         return $this->numero;
     }
 
-    public function setNumero(string $numero): self
+    public function setNumero(?string $numero): self
     {
         $this->numero = $numero;
 
@@ -89,7 +89,7 @@ class Direccion
         return $this->puertaPisoEscalera;
     }
 
-    public function setPuertaPisoEscalera(string $puertaPisoEscalera): self
+    public function setPuertaPisoEscalera(?string $puertaPisoEscalera): self
     {
         $this->puertaPisoEscalera = $puertaPisoEscalera;
 
@@ -120,26 +120,26 @@ class Direccion
         return $this;
     }
 
-    public function getProvincia(): ?Municipios
-    {
-        return $this->provincia;
-    }
-
-    public function setProvincia(Municipios $provincia): self
-    {
-        $this->provincia = $provincia;
-
-        return $this;
-    }
-
     public function getMunicipio(): ?Municipios
     {
         return $this->municipio;
     }
 
-    public function setMunicipio(Municipios $municipio): self
+    public function setMunicipio(?Municipios $municipio): self
     {
         $this->municipio = $municipio;
+
+        return $this;
+    }
+
+    public function getProvincia(): ?Provincias
+    {
+        return $this->provincia;
+    }
+
+    public function setProvincia(?Provincias $provincia): self
+    {
+        $this->provincia = $provincia;
 
         return $this;
     }

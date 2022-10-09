@@ -2,15 +2,13 @@
 
 namespace App\Entity;
 
-use App\Repository\HorarioRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
+use App\Repository\HorarioRestauranteRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=HorarioRepository::class)
+ * @ORM\Entity(repositoryClass=HorarioRestauranteRepository::class)
  */
-class Horario
+class HorarioRestaurante
 {
     /**
      * @ORM\Id
@@ -20,22 +18,22 @@ class Horario
     private $id;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="integer")
      */
     private $dia;
 
     /**
-     * @ORM\Column(type="time", nullable=true)
+     * @ORM\Column(type="time")
      */
     private $apertura;
 
     /**
-     * @ORM\Column(type="time", nullable=true)
+     * @ORM\Column(type="time")
      */
     private $cierre;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Restaurante::class, inversedBy="horario")
+     * @ORM\ManyToOne(targetEntity=Restaurante::class, inversedBy="horarios")
      * @ORM\JoinColumn(nullable=false)
      */
     private $restaurante;
@@ -92,5 +90,4 @@ class Horario
 
         return $this;
     }
-
 }

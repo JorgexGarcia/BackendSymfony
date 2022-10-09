@@ -25,7 +25,7 @@ class Restaurante
     private $nombre;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $logoUrl;
 
@@ -40,36 +40,53 @@ class Restaurante
     private $descripcion;
 
     /**
-     * @ORM\Column(type="boolean", nullable=true)
+     * @ORM\Column(type="boolean")
      */
     private $destacado;
 
     /**
-     * @ORM\OneToMany(targetEntity=Plato::class, mappedBy="restaurante", orphanRemoval=true)
+     * @ORM\Column(type="float", nullable=true)
      */
-    private $plato;
-
-    /**
-     * @ORM\OneToMany(targetEntity=Horario::class, mappedBy="restaurante", orphanRemoval=true)
-     */
-    private $horario;
-
-    /**
-     * @ORM\ManyToMany(targetEntity=Categoria::class)
-     */
-    private $categoria;
+    private $valoracionMedia;
 
     /**
      * @ORM\OneToMany(targetEntity=Pedido::class, mappedBy="restaurante", orphanRemoval=true)
      */
     private $pedidos;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Municipios::class)
+     */
+    private $municipioReparto;
+
+    /**
+     * @ORM\ManyToMany(targetEntity=Categoria::class)
+     */
+    private $categorias;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comentario::class, mappedBy="restaurante", orphanRemoval=true)
+     */
+    private $comentarios;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Plato::class, mappedBy="restaurante", orphanRemoval=true)
+     */
+    private $platos;
+
+    /**
+     * @ORM\OneToMany(targetEntity=HorarioRestaurante::class, mappedBy="restaurante", orphanRemoval=true)
+     */
+    private $horarios;
+
     public function __construct()
     {
-        $this->plato = new ArrayCollection();
-        $this->horario = new ArrayCollection();
-        $this->categoria = new ArrayCollection();
         $this->pedidos = new ArrayCollection();
+        $this->municipioReparto = new ArrayCollection();
+        $this->categorias = new ArrayCollection();
+        $this->comentarios = new ArrayCollection();
+        $this->platos = new ArrayCollection();
+        $this->horarios = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -106,7 +123,7 @@ class Restaurante
         return $this->imagenUrl;
     }
 
-    public function setImagenUrl(string $imagenUrl): self
+    public function setImagenUrl(?string $imagenUrl): self
     {
         $this->imagenUrl = $imagenUrl;
 
@@ -118,7 +135,7 @@ class Restaurante
         return $this->descripcion;
     }
 
-    public function setDescripcion(string $descripcion): self
+    public function setDescripcion(?string $descripcion): self
     {
         $this->descripcion = $descripcion;
 
@@ -137,86 +154,14 @@ class Restaurante
         return $this;
     }
 
-    /**
-     * @return Collection<int, Plato>
-     */
-    public function getPlato(): Collection
+    public function getValoracionMedia(): ?float
     {
-        return $this->plato;
+        return $this->valoracionMedia;
     }
 
-    public function addPlato(Plato $plato): self
+    public function setValoracionMedia(?float $valoracionMedia): self
     {
-        if (!$this->plato->contains($plato)) {
-            $this->plato[] = $plato;
-            $plato->setRestaurante($this);
-        }
-
-        return $this;
-    }
-
-    public function removePlato(Plato $plato): self
-    {
-        if ($this->plato->removeElement($plato)) {
-            // set the owning side to null (unless already changed)
-            if ($plato->getRestaurante() === $this) {
-                $plato->setRestaurante(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Horario>
-     */
-    public function getHorario(): Collection
-    {
-        return $this->horario;
-    }
-
-    public function addHorario(Horario $horario): self
-    {
-        if (!$this->horario->contains($horario)) {
-            $this->horario[] = $horario;
-            $horario->setRestaurante($this);
-        }
-
-        return $this;
-    }
-
-    public function removeHorario(Horario $horario): self
-    {
-        if ($this->horario->removeElement($horario)) {
-            // set the owning side to null (unless already changed)
-            if ($horario->getRestaurante() === $this) {
-                $horario->setRestaurante(null);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Categoria>
-     */
-    public function getCategoria(): Collection
-    {
-        return $this->categoria;
-    }
-
-    public function addCategorium(Categoria $categorium): self
-    {
-        if (!$this->categoria->contains($categorium)) {
-            $this->categoria[] = $categorium;
-        }
-
-        return $this;
-    }
-
-    public function removeCategorium(Categoria $categorium): self
-    {
-        $this->categoria->removeElement($categorium);
+        $this->valoracionMedia = $valoracionMedia;
 
         return $this;
     }
@@ -251,4 +196,141 @@ class Restaurante
         return $this;
     }
 
+    /**
+     * @return Collection<int, Municipios>
+     */
+    public function getMunicipioReparto(): Collection
+    {
+        return $this->municipioReparto;
+    }
+
+    public function addMunicipioReparto(Municipios $municipioReparto): self
+    {
+        if (!$this->municipioReparto->contains($municipioReparto)) {
+            $this->municipioReparto[] = $municipioReparto;
+        }
+
+        return $this;
+    }
+
+    public function removeMunicipioReparto(Municipios $municipioReparto): self
+    {
+        $this->municipioReparto->removeElement($municipioReparto);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Categoria>
+     */
+    public function getCategorias(): Collection
+    {
+        return $this->categorias;
+    }
+
+    public function addCategoria(Categoria $categoria): self
+    {
+        if (!$this->categorias->contains($categoria)) {
+            $this->categorias[] = $categoria;
+        }
+
+        return $this;
+    }
+
+    public function removeCategoria(Categoria $categoria): self
+    {
+        $this->categorias->removeElement($categoria);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comentario>
+     */
+    public function getComentarios(): Collection
+    {
+        return $this->comentarios;
+    }
+
+    public function addComentario(Comentario $comentario): self
+    {
+        if (!$this->comentarios->contains($comentario)) {
+            $this->comentarios[] = $comentario;
+            $comentario->setRestaurante($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComentario(Comentario $comentario): self
+    {
+        if ($this->comentarios->removeElement($comentario)) {
+            // set the owning side to null (unless already changed)
+            if ($comentario->getRestaurante() === $this) {
+                $comentario->setRestaurante(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Plato>
+     */
+    public function getPlatos(): Collection
+    {
+        return $this->platos;
+    }
+
+    public function addPlato(Plato $plato): self
+    {
+        if (!$this->platos->contains($plato)) {
+            $this->platos[] = $plato;
+            $plato->setRestaurante($this);
+        }
+
+        return $this;
+    }
+
+    public function removePlato(Plato $plato): self
+    {
+        if ($this->platos->removeElement($plato)) {
+            // set the owning side to null (unless already changed)
+            if ($plato->getRestaurante() === $this) {
+                $plato->setRestaurante(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, HorarioRestaurante>
+     */
+    public function getHorarios(): Collection
+    {
+        return $this->horarios;
+    }
+
+    public function addHorario(HorarioRestaurante $horario): self
+    {
+        if (!$this->horarios->contains($horario)) {
+            $this->horarios[] = $horario;
+            $horario->setRestaurante($this);
+        }
+
+        return $this;
+    }
+
+    public function removeHorario(HorarioRestaurante $horario): self
+    {
+        if ($this->horarios->removeElement($horario)) {
+            // set the owning side to null (unless already changed)
+            if ($horario->getRestaurante() === $this) {
+                $horario->setRestaurante(null);
+            }
+        }
+
+        return $this;
+    }
 }

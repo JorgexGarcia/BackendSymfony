@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PedidoRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -18,26 +20,20 @@ class Pedido
     private $id;
 
     /**
-     * @ORM\Column(type="integer", nullable=true)
+     * @ORM\Column(type="float")
      */
     private $total;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     private $fechaEntrega;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Cliente::class, inversedBy="pedido")
+     * @ORM\ManyToOne(targetEntity=Cliente::class, inversedBy="pedidos")
      * @ORM\JoinColumn(nullable=false)
      */
     private $cliente;
-
-    /**
-     * @ORM\OneToOne(targetEntity=Direccion::class, cascade={"persist", "remove"})
-     * @ORM\JoinColumn(nullable=false)
-     */
-    private $direccion;
 
     /**
      * @ORM\ManyToOne(targetEntity=Estado::class)
@@ -52,22 +48,32 @@ class Pedido
     private $restaurante;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Plato::class, inversedBy="pedidos")
+     * @ORM\OneToMany(targetEntity=CantidadPlatosPedido::class, mappedBy="pedido")
+     */
+    private $lineaPedido;
+
+    /**
+     * @ORM\ManyToOne(targetEntity=Direccion::class)
      * @ORM\JoinColumn(nullable=false)
      */
-    private $platos;
+    private $direccion;
+
+    public function __construct()
+    {
+        $this->lineaPedido = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getTotal(): ?int
+    public function getTotal(): ?float
     {
         return $this->total;
     }
 
-    public function setTotal(int $total): self
+    public function setTotal(float $total): self
     {
         $this->total = $total;
 
@@ -98,18 +104,6 @@ class Pedido
         return $this;
     }
 
-    public function getDireccion(): ?Direccion
-    {
-        return $this->direccion;
-    }
-
-    public function setDireccion(Direccion $direccion): self
-    {
-        $this->direccion = $direccion;
-
-        return $this;
-    }
-
     public function getEstado(): ?Estado
     {
         return $this->estado;
@@ -134,14 +128,44 @@ class Pedido
         return $this;
     }
 
-    public function getPlatos(): ?Plato
+    /**
+     * @return Collection<int, CantidadPlatosPedido>
+     */
+    public function getLineaPedido(): Collection
     {
-        return $this->platos;
+        return $this->lineaPedido;
     }
 
-    public function setPlatos(?Plato $platos): self
+    public function addLineaPedido(CantidadPlatosPedido $lineaPedido): self
     {
-        $this->platos = $platos;
+        if (!$this->lineaPedido->contains($lineaPedido)) {
+            $this->lineaPedido[] = $lineaPedido;
+            $lineaPedido->setPedido($this);
+        }
+
+        return $this;
+    }
+
+    public function removeLineaPedido(CantidadPlatosPedido $lineaPedido): self
+    {
+        if ($this->lineaPedido->removeElement($lineaPedido)) {
+            // set the owning side to null (unless already changed)
+            if ($lineaPedido->getPedido() === $this) {
+                $lineaPedido->setPedido(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getDireccion(): ?Direccion
+    {
+        return $this->direccion;
+    }
+
+    public function setDireccion(?Direccion $direccion): self
+    {
+        $this->direccion = $direccion;
 
         return $this;
     }
