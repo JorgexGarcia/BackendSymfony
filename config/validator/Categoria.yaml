@@ -3,3 +3,4 @@ App\Entity\Categoria:
     categoria:
       - NotBlank:
           message: 'The category name cannot be null or empty.'
+      - Type: string

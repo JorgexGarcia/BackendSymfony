@@ -1,0 +1,19 @@
+App\Entity\Cliente:
+  attributes:
+    id:
+      groups: ['get_cliente']
+
+    nombre:
+      groups: ['get_cliente', 'create_cliente']
+
+    apellidos:
+      groups: [ 'get_cliente', 'create_cliente' ]
+
+    telefono:
+      groups: [ 'get_cliente', 'create_cliente' ]
+
+    direcciones:
+      groups: [ ]
+
+    pedidos:
+      groups: []
