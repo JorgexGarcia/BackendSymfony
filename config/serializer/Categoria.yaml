@@ -4,4 +4,4 @@ App\Entity\Categoria:
       groups: ['get_categorias']
 
     categoria:
-      groups: ['get_categorias']
+      groups: ['get_categorias', 'create_categorias']
