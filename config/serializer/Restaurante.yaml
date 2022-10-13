@@ -1,0 +1,26 @@
+App\Entity\Restaurante:
+  attributes:
+    id:
+      groups: ['get_restaurante']
+
+    nombre:
+      groups: ['get_restaurante']
+
+    logoUrl:
+      groups: ['get_restaurante']
+
+    imagenUrl:
+      groups: ['get_restaurante']
+
+    descripcion:
+      groups: ['get_restaurante']
+
+    destacado:
+      groups: ['get_restaurante']
+
+    valoracionMedia:
+      groups: ['get_restaurante']
+
+    municipio:
+      groups: ['get_restaurante']
+

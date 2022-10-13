@@ -79,6 +79,12 @@ class Restaurante
      */
     private $horarios;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Municipios::class, inversedBy="restaurantes")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $municipio;
+
     public function __construct()
     {
         $this->pedidos = new ArrayCollection();
@@ -330,6 +336,18 @@ class Restaurante
                 $horario->setRestaurante(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getMunicipio(): ?Municipios
+    {
+        return $this->municipio;
+    }
+
+    public function setMunicipio(?Municipios $municipio): self
+    {
+        $this->municipio = $municipio;
 
         return $this;
     }

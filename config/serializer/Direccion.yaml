@@ -1,0 +1,25 @@
+App\Entity\Direccion:
+  attributes:
+    id:
+      groups: ['get_direccion', 'create_direccion']
+
+    calle:
+      groups: ['get_direccion', 'create_direccion']
+
+    numero:
+      groups: [ 'get_direccion', 'create_direccion' ]
+
+    puertaPisoEscalera:
+      groups: [ 'get_direccion', 'create_direccion' ]
+
+    codPostal:
+      groups: [ 'get_direccion', 'create_direccion' ]
+
+    cliente:
+      groups: [ 'get_direccion', 'create_direccion' ]
+
+    municipio:
+      groups: [ 'get_direccion', 'create_direccion' ]
+
+    provincia:
+      groups: [ 'get_direccion', 'create_direccion' ]

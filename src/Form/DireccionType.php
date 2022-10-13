@@ -14,6 +14,13 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class DireccionType extends AbstractType
 {
+    public function configureOptions(OptionsResolver $resolver): void
+    {
+        $resolver->setDefaults([
+            'data_class' => Direccion::class,
+        ]);
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
@@ -25,13 +32,6 @@ class DireccionType extends AbstractType
             ->add('municipio', EntityType::class, ['class'=>Municipios::class])
             ->add('provincia', EntityType::class, ['class'=>Provincias::class])
         ;
-    }
-
-    public function configureOptions(OptionsResolver $resolver): void
-    {
-        $resolver->setDefaults([
-            'data_class' => Direccion::class,
-        ]);
     }
 
     //Quitar tener que añadir un padre

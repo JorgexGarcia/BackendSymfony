@@ -1,16 +1,16 @@
 App\Entity\Cliente:
   attributes:
     id:
-      groups: ['get_cliente']
+      groups: ['get_cliente', 'create_direccion']
 
     nombre:
-      groups: ['get_cliente', 'create_cliente']
+      groups: ['get_cliente', 'create_cliente', 'create_direccion']
 
     apellidos:
-      groups: [ 'get_cliente', 'create_cliente' ]
+      groups: [ 'get_cliente', 'create_cliente','create_direccion']
 
     telefono:
-      groups: [ 'get_cliente', 'create_cliente' ]
+      groups: [ 'get_cliente', 'create_cliente', 'create_direccion' ]
 
     direcciones:
       groups: [ ]

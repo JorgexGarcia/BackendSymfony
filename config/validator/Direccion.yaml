@@ -1,0 +1,17 @@
+App\Entity\Direccion:
+  properties:
+    calle:
+      - NotBlank:
+          message: 'The name cannot be null or empty.'
+
+    numero:
+      - NotBlank:
+          message: 'The name cannot be null or empty.'
+
+    puertaPisoEscalera:
+      - NotBlank:
+          message: 'The name cannot be null or empty.'
+
+    codPostal:
+      - NotBlank:
+          message: 'The name cannot be null or empty.'
