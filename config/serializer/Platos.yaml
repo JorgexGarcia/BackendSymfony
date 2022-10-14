@@ -1,0 +1,22 @@
+App\Entity\Plato:
+  attributes:
+    id:
+      groups: ['get_restaurante', 'filtered']
+
+    nombre:
+      groups: ['get_restaurante', 'filtered']
+
+    imagenUrl:
+      groups: ['get_restaurante', 'filtered']
+
+    descripcion:
+      groups: ['get_restaurante', 'filtered']
+
+    restaurante:
+      groups: []
+
+    alergenos:
+      groups: ['get_restaurante', 'filtered']
+
+    cantidadPlato:
+      groups: ['get_restaurante', 'filtered']

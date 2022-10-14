@@ -1,26 +1,40 @@
 App\Entity\Restaurante:
   attributes:
     id:
-      groups: ['get_restaurante']
+      groups: ['get_restaurante', 'filtered']
 
     nombre:
-      groups: ['get_restaurante']
+      groups: ['get_restaurante', 'filtered']
 
     logoUrl:
-      groups: ['get_restaurante']
+      groups: ['get_restaurante', 'filtered']
 
     imagenUrl:
-      groups: ['get_restaurante']
+      groups: ['get_restaurante', 'filtered']
 
     descripcion:
-      groups: ['get_restaurante']
+      groups: ['get_restaurante', 'filtered']
 
     destacado:
-      groups: ['get_restaurante']
+      groups: ['get_restaurante', 'filtered']
 
     valoracionMedia:
-      groups: ['get_restaurante']
+      groups: ['get_restaurante', 'filtered']
 
     municipio:
-      groups: ['get_restaurante']
+      groups: ['get_restaurante', 'filtered']
 
+    pedidos:
+      groups: ['get_restaurante', 'filtered']
+
+    municipioReparto:
+      groups: ['get_restaurante', 'filtered']
+
+    categorias:
+      groups: ['get_restaurante', 'filtered']
+
+    platos:
+      groups: ['get_restaurante', 'filtered']
+
+    horarios:
+      groups: ['get_restaurante', 'filtered']

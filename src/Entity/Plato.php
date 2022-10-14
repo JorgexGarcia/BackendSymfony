@@ -50,6 +50,11 @@ class Plato
      */
     private $cantidadPlato;
 
+    /**
+     * @ORM\Column(type="float")
+     */
+    private $precio;
+
     public function __construct()
     {
         $this->alergenos = new ArrayCollection();
@@ -159,6 +164,18 @@ class Plato
                 $cantidadPlato->setPlato(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getPrecio(): ?float
+    {
+        return $this->precio;
+    }
+
+    public function setPrecio(float $precio): self
+    {
+        $this->precio = $precio;
 
         return $this;
     }

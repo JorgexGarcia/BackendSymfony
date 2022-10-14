@@ -1,7 +1,7 @@
 App\Entity\Municipios:
   attributes:
     id:
-      groups: ['get_direccion', 'create_direccion', 'get_provincias']
+      groups: ['get_direccion', 'create_direccion', 'get_provincias', 'get_restaurante', 'filtered']
 
     municipio:
-      groups: [ 'get_direccion', 'create_direccion', 'get_provincias' ]
+      groups: [ 'get_direccion', 'create_direccion', 'get_provincias', 'get_restaurante', 'filtered' ]
