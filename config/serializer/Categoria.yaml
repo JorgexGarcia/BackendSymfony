@@ -1,7 +1,7 @@
 App\Entity\Categoria:
   attributes:
     id:
-      groups: ['get_categorias', 'get_restaurante', 'filtered']
+      groups: ['categoria']
 
     categoria:
-      groups: ['get_categorias', 'create_categorias', 'get_restaurante', 'filtered']
+      groups: ['categoria']

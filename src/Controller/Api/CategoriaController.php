@@ -5,6 +5,7 @@ namespace App\Controller\Api;
 use App\Entity\Categoria;
 use App\Form\CategoriaType;
 use App\Repository\CategoriaRepository;
+use Exception;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Psr\Container\ContainerInterface;
@@ -29,96 +30,135 @@ class CategoriaController extends AbstractFOSRestController
 
     /**
      * @Rest\Get(path="/")
-     * @Rest\View(serializerGroups={"get_categorias"}, serializerEnableMaxDepthChecks= true)
+     * @Rest\View(serializerGroups={"categoria"}, serializerEnableMaxDepthChecks= true)
      */
     public function getAllCategoria(Request $request){
 
-        $this->logger->info('Visitante con ip: '.$request->getClientIp()
-            .' Obtiene todas las categorias de la BD');
+        try{
 
-        return $this->categoriaRepository->findAll();
+            $this->logger->info('Ip: '.$request->getClientIp()
+                .' getAllCategoria');
+
+            return $this->categoriaRepository->findAll();
+
+        }catch (Exception $exception){
+
+            $this->logger->alert('Ip: '.$request->getClientIp()
+                .' Error getAllCategoria '.$exception);
+
+            return $exception;
+        }
     }
 
     /**
      * @Rest\Get(path="/{id}")
-     * @Rest\View(serializerGroups={"get_categorias"}, serializerEnableMaxDepthChecks= true)
+     * @Rest\View(serializerGroups={"categoria"}, serializerEnableMaxDepthChecks= true)
      */
     public function getOneCategoria(Request $request){
 
-        $categoria = $this->categoriaRepository->find($request->get('id'));
+        try{
 
-        if(!$categoria) {
-            $this->logger->info('Visitante con ip: '.$request->getClientIp()
-                .' No hay campos en Categoría '.$request->get('id'));
-            return $this->response->setData([
-                'success' => true,
-                'data' => null
-            ])->setStatusCode(200);
+            $categoria = $this->categoriaRepository->find($request->get('id'));
+
+            if(!$categoria) {
+                $this->logger->info('Ip: ' . $request->getClientIp()
+                    . ' getOneCategoria Not Found ' . $request->get('id'));
+                return $this->response->setData([
+                    'success' => false,
+                    'data' => null
+                ])->setStatusCode(404);
+            }
+
+            $this->logger->info('Ip: '.$request->getClientIp()
+                .' getOneCategoria');
+
+            return $categoria;
+
+        }catch (Exception $exception){
+
+            $this->logger->alert('Ip: '.$request->getClientIp()
+                .' Error getOneCategoria '.$exception);
+
+            return $exception;
         }
-
-        $this->logger->info('Visitante con ip: '.$request->getClientIp()
-            .' Obtiene la categoria '.$request->get('id').' de la BD');
-
-        return $categoria;
     }
 
     /**
      * @Rest\Post(path="/")
-     * @Rest\View(serializerGroups={"create_categorias"}, serializerEnableMaxDepthChecks= true)
+     * @Rest\View(serializerGroups={"categoria"}, serializerEnableMaxDepthChecks= true)
      */
     public function createCategoria(Request  $request){
+        try{
 
-        $cat = new Categoria();
+            $cat = new Categoria();
 
-        $form = $this->createForm(CategoriaType::class, $cat);
+            $form = $this->createForm(CategoriaType::class, $cat);
 
-        $form->handleRequest($request);
+            $form->handleRequest($request);
 
-        if(!$form->isSubmitted() || !$form->isValid()){
-            $this->logger->alert('Visitante con ip: '.$request->getClientIp()
-                .' Categoría no válida');
-            return $form;
+            if(!$form->isSubmitted() || !$form->isValid()){
+                $this->logger->alert('Visitante con ip: '.$request->getClientIp()
+                    .' createCategoria');
+                return $form;
+            }
+
+            $this->categoriaRepository->add($cat, true);
+
+            return $cat;
+
+        }catch (Exception $exception){
+
+            $this->logger->alert('Ip: '.$request->getClientIp()
+                .' Error createCategoria '.$exception);
+
+            return $exception;
         }
-
-        $this->categoriaRepository->add($cat, true);
-
-        return $cat;
     }
 
     /**
      * @Rest\Patch(path="/{id}")
-     * @Rest\View(serializerGroups={"create_categorias"}, serializerEnableMaxDepthChecks= true)
+     * @Rest\View(serializerGroups={"categoria"}, serializerEnableMaxDepthChecks= true)
      */
     public function updateCategoria(Request  $request){
 
-        $categoria = $this->categoriaRepository->find($request->get('id'));
+        try{
 
-        if(!$categoria) {
+            $categoria = $this->categoriaRepository->find($request->get('id'));
+
+            if(!$categoria) {
+                $this->logger->info('Ip: ' . $request->getClientIp()
+                    . ' updateCategoria Not Found ' . $request->get('id'));
+                return $this->response->setData([
+                    'success' => false,
+                    'data' => null
+                ])->setStatusCode(404);
+            }
+
+            $form = $this->createForm(CategoriaType::class,
+                $categoria, ['method'=>$request->getMethod()]);
+
+            $form->handleRequest($request);
+
+            if(!$form->isSubmitted() || !$form->isValid()){
+                $this->logger->alert('Visitante con ip: '.$request->getClientIp()
+                    .' updateCategoria');
+                return $form;
+            }
+
             $this->logger->info('Visitante con ip: '.$request->getClientIp()
-                .' No hay campos en Categoría '.$request->get('id'));
-            return $this->response->setData([
-                'success' => true,
-                'data' => null
-            ])->setStatusCode(200);
+                .' updateCategoria');
+
+            $this->categoriaRepository->add($categoria, true);
+
+            return $categoria;
+
+        }catch (Exception $exception){
+
+            $this->logger->alert('Ip: '.$request->getClientIp()
+                .' Error updateCategoria '.$exception);
+
+            return $exception;
         }
-
-        $form = $this->createForm(CategoriaType::class,
-            $categoria, ['method'=>$request->getMethod()]);
-
-        $form->handleRequest($request);
-
-        if(!$form->isSubmitted() || !$form->isValid()){
-            $this->logger->alert('Visitante con ip: '.$request->getClientIp()
-                .' Categoría no válida');
-            return $form;
-        }
-
-        $this->logger->info('Visitante con ip: '.$request->getClientIp()
-            .' Actualiza la categoria '.$request->get('id').' de la BD');
-
-        $this->categoriaRepository->add($categoria, true);
-
-        return $categoria;
     }
 
     /**
@@ -126,25 +166,35 @@ class CategoriaController extends AbstractFOSRestController
      */
     public function deleteCategoria(Request  $request){
 
-        $categoria = $this->categoriaRepository->find($request->get('id'));
+        try{
 
-        if(!$categoria) {
+            $categoria = $this->categoriaRepository->find($request->get('id'));
+
+            if(!$categoria) {
+                $this->logger->info('Ip: ' . $request->getClientIp()
+                    . ' deleteCategoria Not Found ' . $request->get('id'));
+                return $this->response->setData([
+                    'success' => false,
+                    'data' => null
+                ])->setStatusCode(404);
+            }
+
+            $this->categoriaRepository->remove($categoria,true);
+
             $this->logger->info('Visitante con ip: '.$request->getClientIp()
-                .' No hay campos en Categoría '.$request->get('id'));
+                .' deleteCategoria');
+
             return $this->response->setData([
                 'success' => true,
-                'data' => 'Category not found'
-            ])->setStatusCode(404);
+                'data' =>'Category removed'
+            ])->setStatusCode(200);
+
+        }catch (Exception $exception){
+
+            $this->logger->alert('Ip: '.$request->getClientIp()
+                .' Error deleteCategoria '.$exception);
+
+            return $exception;
         }
-
-        $this->categoriaRepository->remove($categoria,true);
-
-        $this->logger->info('Visitante con ip: '.$request->getClientIp()
-            .' Elimina la categoria '.$request->get('id').' de la BD');
-
-        return $this->response->setData([
-            'success' => true,
-            'data' =>'Category removed'
-        ])->setStatusCode(200);
     }
 }
