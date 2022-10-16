@@ -1,7 +1,7 @@
 App\Entity\Provincias:
   attributes:
     id:
-      groups: ['get_direccion', 'create_direccion', 'get_provincias']
+      groups: ['provincias', 'create_direccion', 'get_provincias']
 
     provincia:
-      groups: [ 'get_direccion', 'create_direccion', 'get_provincias' ]
+      groups: [ 'provincias', 'create_direccion', 'get_provincias' ]

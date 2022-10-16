@@ -30,40 +30,96 @@ class ProvinciasController extends AbstractFOSRestController
 
     /**
      * @Rest\Get(path="/")
-     * @Rest\View(serializerGroups={"get_provincias"}, serializerEnableMaxDepthChecks= true)
+     * @Rest\View(serializerGroups={"provincias"}, serializerEnableMaxDepthChecks= true)
      */
     public function getAllProvincias(Request $request){
 
-        $this->logger->info('Visitante con ip: '.$request->getClientIp()
-            .' Obtiene todas las provincias de la BD');
+        try{
 
-        return $this->provinciaRepository->findAll();
+            $this->logger->info('Ip: '.$request->getClientIp()
+                .' getAllProvincias');
+
+            return $this->provinciaRepository->findAll();
+
+        }catch (Exception $exception){
+
+            $this->logger->alert('Ip: '.$request->getClientIp()
+                .' Error getAllProvincias '.$exception);
+
+            return $exception;
+        }
     }
 
     /**
-     * @Rest\Get(path="/municipios/{id}")
-     * @Rest\View(serializerGroups={"get_provincias"}, serializerEnableMaxDepthChecks= true)
+     * @Rest\Get(path="/{id}")
+     * @Rest\View(serializerGroups={"provincias"}, serializerEnableMaxDepthChecks= true)
      */
-    public function getMuniciposByProvincias(Request $request){
+    public function getOneProvincia(Request $request){
 
+        try{
 
-        $provincia = $this->provinciaRepository->find($request->get('id'));
+            $this->logger->info('Ip: '.$request->getClientIp()
+                .' getOneProvincia');
 
-        if(!$provincia) {
-            $this->logger->info('Visitante con ip: '.$request->getClientIp()
-                .' No hay campos en Provincia '.$request->get('id'));
-            return $this->response->setData([
-                'success' => true,
-                'data' => null
-            ])->setStatusCode(404);
+            return $this->provinciaRepository->find($request->get('id'));
+
+        }catch (Exception $exception){
+
+            $this->logger->alert('Ip: '.$request->getClientIp()
+                .' Error getOneProvincia '.$exception);
+
+            return $exception;
+        }
+    }
+
+    /**
+     * @Rest\Get(path="/municipio/{id}")
+     * @Rest\View(serializerGroups={"provincias"}, serializerEnableMaxDepthChecks= true)
+     */
+    public function getProvinciaByMunicipio(Request $request){
+        try{
+
+            $municipio = $this->municipiosRepository->find($request->get('id'));
+
+            if(!$municipio) {
+                $this->logger->info('Ip: '.$request->getClientIp()
+                    .' getProvinciaByMunicipio Not Found '.$request->get('id'));
+                return $this->response->setData([
+                    'success' => false,
+                    'data' => null
+                ])->setStatusCode(404);
+            }
+
+            $this->logger->info('Ip: '.$request->getClientIp()
+                .' getProvinciaByMunicipio');
+
+            return $this->provinciaRepository->findBy(['id'=> $municipio->getIdProvincia()]);
+
+        }catch (Exception $exception){
+
+            $this->logger->alert('Ip: '.$request->getClientIp()
+                .' Error getProvinciaByMunicipio '.$exception);
+
+            return $exception;
         }
 
-        $municipios = $this->municipiosRepository->findBy(['idProvincia'=> $provincia]);
-
-        $this->logger->info('Visitante con ip: '.$request->getClientIp()
-            .' Obtiene los municipios de una provincia '.$request->get('id').' de la BD');
-
-        return $municipios;
+//        $provincia = $this->provinciaRepository->find($request->get('id'));
+//
+//        if(!$provincia) {
+//            $this->logger->info('Visitante con ip: '.$request->getClientIp()
+//                .' No hay campos en Provincia '.$request->get('id'));
+//            return $this->response->setData([
+//                'success' => true,
+//                'data' => null
+//            ])->setStatusCode(404);
+//        }
+//
+//        $municipios = $this->municipiosRepository->findBy(['idProvincia'=> $provincia]);
+//
+//        $this->logger->info('Visitante con ip: '.$request->getClientIp()
+//            .' Obtiene los municipios de una provincia '.$request->get('id').' de la BD');
+//
+//        return $municipios;
     }
 
 }

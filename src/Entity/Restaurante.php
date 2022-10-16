@@ -85,6 +85,11 @@ class Restaurante
      */
     private $municipio;
 
+    /**
+     * @ORM\OneToOne(targetEntity=User::class, cascade={"persist", "remove"})
+     */
+    private $user;
+
     public function __construct()
     {
         $this->pedidos = new ArrayCollection();
@@ -348,6 +353,18 @@ class Restaurante
     public function setMunicipio(?Municipios $municipio): self
     {
         $this->municipio = $municipio;
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }
