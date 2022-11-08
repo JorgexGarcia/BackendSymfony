@@ -1,8 +1,7 @@
 App\Entity\User:
   attributes:
-  id:
-    groups: ['user']
-  email:
-    groups: ['user']
-  roles:
-   groups: ['user']
+    id:
+      groups: ['create_user']
+
+    roles:
+      groups: ['create_user']

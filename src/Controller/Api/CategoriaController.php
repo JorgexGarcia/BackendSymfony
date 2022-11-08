@@ -84,7 +84,7 @@ class CategoriaController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Post(path="/")
+     * @Rest\Post(path="/admin")
      * @Rest\View(serializerGroups={"categoria"}, serializerEnableMaxDepthChecks= true)
      */
     public function createCategoria(Request  $request){
@@ -116,7 +116,7 @@ class CategoriaController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Patch(path="/{id}")
+     * @Rest\Patch(path="/admin/{id}")
      * @Rest\View(serializerGroups={"categoria"}, serializerEnableMaxDepthChecks= true)
      */
     public function updateCategoria(Request  $request){
@@ -162,7 +162,7 @@ class CategoriaController extends AbstractFOSRestController
     }
 
     /**
-     * @Rest\Delete(path="/{id}")
+     * @Rest\Delete(path="/admin/{id}")
      */
     public function deleteCategoria(Request  $request){
 

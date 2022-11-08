@@ -1,13 +1,13 @@
 App\Entity\Cliente:
   attributes:
     id:
-      groups: ['get_cliente', 'create_direccion']
+      groups: ['get_cliente', 'create_direccion', 'create_user']
 
     nombre:
-      groups: ['get_cliente', 'create_cliente', 'create_direccion']
+      groups: ['get_cliente', 'create_cliente', 'create_direccion' ]
 
     apellidos:
-      groups: [ 'get_cliente', 'create_cliente','create_direccion']
+      groups: [ 'get_cliente', 'create_cliente','create_direccion' ]
 
     telefono:
       groups: [ 'get_cliente', 'create_cliente', 'create_direccion' ]
@@ -17,3 +17,6 @@ App\Entity\Cliente:
 
     pedidos:
       groups: []
+
+    User:
+      groups: ['create_user']
