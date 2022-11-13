@@ -45,8 +45,11 @@ class UserController extends AbstractFOSRestController
     public function createUser(Request $request)
     {
         $user = $request->get('user');
-        $rol = $request->get('rol');
+        $rol = $request->get('role');
         $cliente = $request->get('cliente');
+
+        print $request;
+
         if(!$user || !$rol || !$cliente){
             return new Response('Bad Request',
                 Response::HTTP_BAD_REQUEST);
