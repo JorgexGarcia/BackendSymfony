@@ -13,7 +13,7 @@ App\Entity\Cliente:
       groups: [ 'get_cliente', 'create_cliente', 'create_direccion' ]
 
     direcciones:
-      groups: [ ]
+      groups: [ 'get_cliente']
 
     pedidos:
       groups: []

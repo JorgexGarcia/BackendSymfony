@@ -1,7 +1,7 @@
 App\Entity\Municipios:
   attributes:
     id:
-      groups: ['municipio']
+      groups: ['municipio', 'get_cliente']
 
     municipio:
-      groups: [ 'municipio']
+      groups: [ 'municipio', 'get_cliente']
